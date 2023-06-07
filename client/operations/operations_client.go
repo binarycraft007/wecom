@@ -28,7 +28,7 @@ type ClientOption func(*runtime.ClientOperation)
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	AddCustomerServiceAccount(params *AddCustomerServiceAccountParams, opts ...ClientOption) (*AddCustomerServiceAccountOK, error)
+	AddCustomerServiceAccount(params *AddCustomerServiceAccountParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AddCustomerServiceAccountOK, error)
 
 	GetToken(params *GetTokenParams, opts ...ClientOption) (*GetTokenOK, error)
 
@@ -38,7 +38,7 @@ type ClientService interface {
 /*
 AddCustomerServiceAccount add customer service account
 */
-func (a *Client) AddCustomerServiceAccount(params *AddCustomerServiceAccountParams, opts ...ClientOption) (*AddCustomerServiceAccountOK, error) {
+func (a *Client) AddCustomerServiceAccount(params *AddCustomerServiceAccountParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AddCustomerServiceAccountOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewAddCustomerServiceAccountParams()
@@ -52,6 +52,7 @@ func (a *Client) AddCustomerServiceAccount(params *AddCustomerServiceAccountPara
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &AddCustomerServiceAccountReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}

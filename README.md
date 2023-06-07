@@ -36,6 +36,16 @@ http://swagger.io/terms/
   * application/json
   * application/xml
 
+## Access control
+
+### Security Schemes
+
+#### access_token (query: access_token)
+
+
+
+> **Type**: apikey
+
 ## All endpoints
 
 ###  operations
@@ -60,11 +70,13 @@ add customer service account
 #### Produces
   * application/json
 
+#### Security Requirements
+  * access_token
+
 #### Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
-| access_token | `query` | string | `string` |  | ✓ |  | access token |
 | AddCustomerServiceAccountRequest | `body` | [AddCustomerServiceAccountRequest](#add-customer-service-account-request) | `models.AddCustomerServiceAccountRequest` | | ✓ | | add customer service account request |
 
 #### All responses

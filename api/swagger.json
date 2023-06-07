@@ -25,6 +25,13 @@
     "application/json",
     "application/xml"
   ],
+  "securityDefinitions": {
+    "access_token": {
+      "type": "apiKey",
+      "name": "access_token",
+      "in": "query"
+    }
+  },
   "paths": {
     "/gettoken": {
       "get": {
@@ -74,13 +81,6 @@
         ],
         "parameters": [
           {
-            "name": "access_token",
-            "in": "query",
-            "description": "access token",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "AddCustomerServiceAccountRequest",
             "in": "body",
             "description": "add customer service account request",
@@ -103,7 +103,12 @@
               "$ref": "#/definitions/ErrorModel"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "access_token": []
+          }
+        ]
       }
     }
   },

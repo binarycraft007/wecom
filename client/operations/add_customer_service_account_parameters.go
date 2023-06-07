@@ -69,12 +69,6 @@ type AddCustomerServiceAccountParams struct {
 	*/
 	AddCustomerServiceAccountRequest *models.AddCustomerServiceAccountRequest
 
-	/* AccessToken.
-
-	   access token
-	*/
-	AccessToken string
-
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -139,17 +133,6 @@ func (o *AddCustomerServiceAccountParams) SetAddCustomerServiceAccountRequest(ad
 	o.AddCustomerServiceAccountRequest = addCustomerServiceAccountRequest
 }
 
-// WithAccessToken adds the accessToken to the add customer service account params
-func (o *AddCustomerServiceAccountParams) WithAccessToken(accessToken string) *AddCustomerServiceAccountParams {
-	o.SetAccessToken(accessToken)
-	return o
-}
-
-// SetAccessToken adds the accessToken to the add customer service account params
-func (o *AddCustomerServiceAccountParams) SetAccessToken(accessToken string) {
-	o.AccessToken = accessToken
-}
-
 // WriteToRequest writes these params to a swagger request
 func (o *AddCustomerServiceAccountParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -159,16 +142,6 @@ func (o *AddCustomerServiceAccountParams) WriteToRequest(r runtime.ClientRequest
 	var res []error
 	if o.AddCustomerServiceAccountRequest != nil {
 		if err := r.SetBodyParam(o.AddCustomerServiceAccountRequest); err != nil {
-			return err
-		}
-	}
-
-	// query param access_token
-	qrAccessToken := o.AccessToken
-	qAccessToken := qrAccessToken
-	if qAccessToken != "" {
-
-		if err := r.SetQueryParam("access_token", qAccessToken); err != nil {
 			return err
 		}
 	}
