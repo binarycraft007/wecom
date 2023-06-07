@@ -34,6 +34,8 @@ type ClientService interface {
 
 	GetToken(params *GetTokenParams, opts ...ClientOption) (*GetTokenOK, error)
 
+	ListCustomerServiceAccount(params *ListCustomerServiceAccountParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListCustomerServiceAccountOK, error)
+
 	UpdateCustomerServiceAccount(params *UpdateCustomerServiceAccountParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateCustomerServiceAccountOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
@@ -149,6 +151,44 @@ func (a *Client) GetToken(params *GetTokenParams, opts ...ClientOption) (*GetTok
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetTokenDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+ListCustomerServiceAccount list customer service account
+*/
+func (a *Client) ListCustomerServiceAccount(params *ListCustomerServiceAccountParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListCustomerServiceAccountOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListCustomerServiceAccountParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "listCustomerServiceAccount",
+		Method:             "POST",
+		PathPattern:        "/kf/account/list",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json", "application/xml"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ListCustomerServiceAccountReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ListCustomerServiceAccountOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListCustomerServiceAccountDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

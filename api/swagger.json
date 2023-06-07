@@ -188,6 +188,45 @@
           }
         ]
       }
+    },
+    "/kf/account/list": {
+      "post": {
+        "description": "list customer service account",
+        "operationId": "listCustomerServiceAccount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "listCustomerServiceAccountRequest",
+            "in": "body",
+            "description": "list customer service account request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListCustomerServiceAccountRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list customer service account response",
+            "schema": {
+              "$ref": "#/definitions/ListCustomerServiceAccountReponse"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        },
+        "security": [
+          {
+            "access_token": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
@@ -304,6 +343,60 @@
           "format": "int32"
         },
         "errmsg": {
+          "type": "string"
+        }
+      }
+    },
+    "ListCustomerServiceAccountRequest": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "ListCustomerServiceAccountReponse": {
+      "type": "object",
+      "required": [
+        "errcode",
+        "errmsg"
+      ],
+      "properties": {
+        "errcode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "errmsg": {
+          "type": "string"
+        },
+        "account_list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomerServiceAccount"
+          }
+        }
+      }
+    },
+    "CustomerServiceAccount": {
+      "type": "object",
+      "required": [
+        "open_kfid",
+        "name",
+        "avatar"
+      ],
+      "properties": {
+        "open_kfid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "avatar": {
           "type": "string"
         }
       }

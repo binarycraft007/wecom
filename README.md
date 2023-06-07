@@ -55,6 +55,7 @@ http://swagger.io/terms/
 | POST | /cgi-bin/kf/account/add | [add customer service account](#add-customer-service-account) |  |
 | POST | /cgi-bin/kf/account/del | [del customer service account](#del-customer-service-account) |  |
 | GET | /cgi-bin/gettoken | [get token](#get-token) |  |
+| POST | /cgi-bin/kf/account/list | [list customer service account](#list-customer-service-account) |  |
 | POST | /cgi-bin/kf/account/update | [update customer service account](#update-customer-service-account) |  |
   
 
@@ -200,6 +201,53 @@ unexpected error
 
 [ErrorModel](#error-model)
 
+### <span id="list-customer-service-account"></span> list customer service account (*listCustomerServiceAccount*)
+
+```
+POST /cgi-bin/kf/account/list
+```
+
+list customer service account
+
+#### Produces
+  * application/json
+
+#### Security Requirements
+  * access_token
+
+#### Parameters
+
+| Name | Source | Type | Go type | Separator | Required | Default | Description |
+|------|--------|------|---------|-----------| :------: |---------|-------------|
+| listCustomerServiceAccountRequest | `body` | [ListCustomerServiceAccountRequest](#list-customer-service-account-request) | `models.ListCustomerServiceAccountRequest` | | ✓ | | list customer service account request |
+
+#### All responses
+| Code | Status | Description | Has headers | Schema |
+|------|--------|-------------|:-----------:|--------|
+| [200](#list-customer-service-account-200) | OK | list customer service account response |  | [schema](#list-customer-service-account-200-schema) |
+| [default](#list-customer-service-account-default) | | unexpected error |  | [schema](#list-customer-service-account-default-schema) |
+
+#### Responses
+
+
+##### <span id="list-customer-service-account-200"></span> 200 - list customer service account response
+Status: OK
+
+###### <span id="list-customer-service-account-200-schema"></span> Schema
+   
+  
+
+[ListCustomerServiceAccountReponse](#list-customer-service-account-reponse)
+
+##### <span id="list-customer-service-account-default"></span> Default Response
+unexpected error
+
+###### <span id="list-customer-service-account-default-schema"></span> Schema
+
+  
+
+[ErrorModel](#error-model)
+
 ### <span id="update-customer-service-account"></span> update customer service account (*updateCustomerServiceAccount*)
 
 ```
@@ -282,6 +330,23 @@ unexpected error
 
 
 
+### <span id="customer-service-account"></span> CustomerServiceAccount
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| avatar | string| `string` | ✓ | |  |  |
+| name | string| `string` | ✓ | |  |  |
+| open_kfid | string| `string` | ✓ | |  |  |
+
+
+
 ### <span id="del-customer-service-account-reponse"></span> DelCustomerServiceAccountReponse
 
 
@@ -344,6 +409,39 @@ unexpected error
 | errcode | int32 (formatted integer)| `int32` | ✓ | |  |  |
 | errmsg | string| `string` | ✓ | |  |  |
 | expires_in | int32 (formatted integer)| `int32` |  | |  |  |
+
+
+
+### <span id="list-customer-service-account-reponse"></span> ListCustomerServiceAccountReponse
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| account_list | [][CustomerServiceAccount](#customer-service-account)| `[]*CustomerServiceAccount` |  | |  |  |
+| errcode | int32 (formatted integer)| `int32` | ✓ | |  |  |
+| errmsg | string| `string` | ✓ | |  |  |
+
+
+
+### <span id="list-customer-service-account-request"></span> ListCustomerServiceAccountRequest
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| limit | int32 (formatted integer)| `int32` |  | |  |  |
+| offset | int32 (formatted integer)| `int32` |  | |  |  |
 
 
 
