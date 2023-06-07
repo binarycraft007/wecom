@@ -1,0 +1,185 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Wecom customer service api",
+    "description": "Wecom customer service api",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "binarycraft"
+    },
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "host": "qyapi.weixin.qq.com",
+  "basePath": "/cgi-bin",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json",
+    "application/xml"
+  ],
+  "produces": [
+    "application/json",
+    "application/xml"
+  ],
+  "paths": {
+    "/gettoken": {
+      "get": {
+        "description": "get access token using corpid and secret",
+        "operationId": "getToken",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "corpid",
+            "in": "query",
+            "description": "corporation id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "corpsecret",
+            "in": "query",
+            "description": "corporation secret",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get access token response",
+            "schema": {
+              "$ref": "#/definitions/GetAccessTokenReponse"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        }
+      }
+    },
+    "/kf/account/add": {
+      "post": {
+        "description": "add customer service account",
+        "operationId": "addCustomerServiceAccount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "access token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "AddCustomerServiceAccountRequest",
+            "in": "body",
+            "description": "add customer service account request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddCustomerServiceAccountRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "add customer service account response",
+            "schema": {
+              "$ref": "#/definitions/AddCustomerServiceAccountReponse"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "GetAccessTokenReponse": {
+      "type": "object",
+      "required": [
+        "errcode",
+        "errmsg"
+      ],
+      "properties": {
+        "errcode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "errmsg": {
+          "type": "string"
+        },
+        "access_token": {
+          "type": "string"
+        },
+        "expires_in": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "AddCustomerServiceAccountRequest": {
+      "type": "object",
+      "required": [
+        "name",
+        "media_id"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "media_id": {
+          "type": "string"
+        }
+      }
+    },
+    "AddCustomerServiceAccountReponse": {
+      "type": "object",
+      "required": [
+        "errcode",
+        "errmsg"
+      ],
+      "properties": {
+        "errcode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "errmsg": {
+          "type": "string"
+        },
+        "open_kfid": {
+          "type": "string"
+        }
+      }
+    },
+    "ErrorModel": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
