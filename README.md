@@ -53,7 +53,9 @@ http://swagger.io/terms/
 | Method  | URI     | Name   | Summary |
 |---------|---------|--------|---------|
 | POST | /cgi-bin/kf/account/add | [add customer service account](#add-customer-service-account) |  |
+| POST | /cgi-bin/kf/account/del | [del customer service account](#del-customer-service-account) |  |
 | GET | /cgi-bin/gettoken | [get token](#get-token) |  |
+| POST | /cgi-bin/kf/account/update | [update customer service account](#update-customer-service-account) |  |
   
 
 
@@ -106,6 +108,53 @@ unexpected error
 
 [ErrorModel](#error-model)
 
+### <span id="del-customer-service-account"></span> del customer service account (*delCustomerServiceAccount*)
+
+```
+POST /cgi-bin/kf/account/del
+```
+
+delete customer service account
+
+#### Produces
+  * application/json
+
+#### Security Requirements
+  * access_token
+
+#### Parameters
+
+| Name | Source | Type | Go type | Separator | Required | Default | Description |
+|------|--------|------|---------|-----------| :------: |---------|-------------|
+| DelCustomerServiceAccountRequest | `body` | [DelCustomerServiceAccountRequest](#del-customer-service-account-request) | `models.DelCustomerServiceAccountRequest` | | ✓ | | delete customer service account request |
+
+#### All responses
+| Code | Status | Description | Has headers | Schema |
+|------|--------|-------------|:-----------:|--------|
+| [200](#del-customer-service-account-200) | OK | delete customer service account response |  | [schema](#del-customer-service-account-200-schema) |
+| [default](#del-customer-service-account-default) | | unexpected error |  | [schema](#del-customer-service-account-default-schema) |
+
+#### Responses
+
+
+##### <span id="del-customer-service-account-200"></span> 200 - delete customer service account response
+Status: OK
+
+###### <span id="del-customer-service-account-200-schema"></span> Schema
+   
+  
+
+[DelCustomerServiceAccountReponse](#del-customer-service-account-reponse)
+
+##### <span id="del-customer-service-account-default"></span> Default Response
+unexpected error
+
+###### <span id="del-customer-service-account-default-schema"></span> Schema
+
+  
+
+[ErrorModel](#error-model)
+
 ### <span id="get-token"></span> get token (*getToken*)
 
 ```
@@ -151,6 +200,53 @@ unexpected error
 
 [ErrorModel](#error-model)
 
+### <span id="update-customer-service-account"></span> update customer service account (*updateCustomerServiceAccount*)
+
+```
+POST /cgi-bin/kf/account/update
+```
+
+update customer service account
+
+#### Produces
+  * application/json
+
+#### Security Requirements
+  * access_token
+
+#### Parameters
+
+| Name | Source | Type | Go type | Separator | Required | Default | Description |
+|------|--------|------|---------|-----------| :------: |---------|-------------|
+| updateCustomerServiceAccountRequest | `body` | [UpdateCustomerServiceAccountRequest](#update-customer-service-account-request) | `models.UpdateCustomerServiceAccountRequest` | | ✓ | | update customer service account request |
+
+#### All responses
+| Code | Status | Description | Has headers | Schema |
+|------|--------|-------------|:-----------:|--------|
+| [200](#update-customer-service-account-200) | OK | update customer service account response |  | [schema](#update-customer-service-account-200-schema) |
+| [default](#update-customer-service-account-default) | | unexpected error |  | [schema](#update-customer-service-account-default-schema) |
+
+#### Responses
+
+
+##### <span id="update-customer-service-account-200"></span> 200 - update customer service account response
+Status: OK
+
+###### <span id="update-customer-service-account-200-schema"></span> Schema
+   
+  
+
+[UpdateCustomerServiceAccountReponse](#update-customer-service-account-reponse)
+
+##### <span id="update-customer-service-account-default"></span> Default Response
+unexpected error
+
+###### <span id="update-customer-service-account-default-schema"></span> Schema
+
+  
+
+[ErrorModel](#error-model)
+
 ## Models
 
 ### <span id="add-customer-service-account-reponse"></span> AddCustomerServiceAccountReponse
@@ -186,6 +282,37 @@ unexpected error
 
 
 
+### <span id="del-customer-service-account-reponse"></span> DelCustomerServiceAccountReponse
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| errcode | int32 (formatted integer)| `int32` | ✓ | |  |  |
+| errmsg | string| `string` | ✓ | |  |  |
+
+
+
+### <span id="del-customer-service-account-request"></span> DelCustomerServiceAccountRequest
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| open_kfid | string| `string` | ✓ | |  |  |
+
+
+
 ### <span id="error-model"></span> ErrorModel
 
 
@@ -217,5 +344,38 @@ unexpected error
 | errcode | int32 (formatted integer)| `int32` | ✓ | |  |  |
 | errmsg | string| `string` | ✓ | |  |  |
 | expires_in | int32 (formatted integer)| `int32` |  | |  |  |
+
+
+
+### <span id="update-customer-service-account-reponse"></span> UpdateCustomerServiceAccountReponse
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| errcode | int32 (formatted integer)| `int32` | ✓ | |  |  |
+| errmsg | string| `string` | ✓ | |  |  |
+
+
+
+### <span id="update-customer-service-account-request"></span> UpdateCustomerServiceAccountRequest
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| media_id | string| `string` |  | |  |  |
+| name | string| `string` |  | |  |  |
+| open_kfid | string| `string` | ✓ | |  |  |
 
 

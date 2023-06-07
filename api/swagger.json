@@ -110,6 +110,84 @@
           }
         ]
       }
+    },
+    "/kf/account/del": {
+      "post": {
+        "description": "delete customer service account",
+        "operationId": "delCustomerServiceAccount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "DelCustomerServiceAccountRequest",
+            "in": "body",
+            "description": "delete customer service account request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DelCustomerServiceAccountRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "delete customer service account response",
+            "schema": {
+              "$ref": "#/definitions/DelCustomerServiceAccountReponse"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        },
+        "security": [
+          {
+            "access_token": []
+          }
+        ]
+      }
+    },
+    "/kf/account/update": {
+      "post": {
+        "description": "update customer service account",
+        "operationId": "updateCustomerServiceAccount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "updateCustomerServiceAccountRequest",
+            "in": "body",
+            "description": "update customer service account request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateCustomerServiceAccountRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update customer service account response",
+            "schema": {
+              "$ref": "#/definitions/UpdateCustomerServiceAccountReponse"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        },
+        "security": [
+          {
+            "access_token": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
@@ -166,6 +244,66 @@
           "type": "string"
         },
         "open_kfid": {
+          "type": "string"
+        }
+      }
+    },
+    "DelCustomerServiceAccountRequest": {
+      "type": "object",
+      "required": [
+        "open_kfid"
+      ],
+      "properties": {
+        "open_kfid": {
+          "type": "string"
+        }
+      }
+    },
+    "DelCustomerServiceAccountReponse": {
+      "type": "object",
+      "required": [
+        "errcode",
+        "errmsg"
+      ],
+      "properties": {
+        "errcode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "errmsg": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdateCustomerServiceAccountRequest": {
+      "type": "object",
+      "required": [
+        "open_kfid"
+      ],
+      "properties": {
+        "open_kfid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "media_id": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdateCustomerServiceAccountReponse": {
+      "type": "object",
+      "required": [
+        "errcode",
+        "errmsg"
+      ],
+      "properties": {
+        "errcode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "errmsg": {
           "type": "string"
         }
       }

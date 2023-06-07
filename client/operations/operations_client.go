@@ -30,7 +30,11 @@ type ClientOption func(*runtime.ClientOperation)
 type ClientService interface {
 	AddCustomerServiceAccount(params *AddCustomerServiceAccountParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AddCustomerServiceAccountOK, error)
 
+	DelCustomerServiceAccount(params *DelCustomerServiceAccountParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DelCustomerServiceAccountOK, error)
+
 	GetToken(params *GetTokenParams, opts ...ClientOption) (*GetTokenOK, error)
+
+	UpdateCustomerServiceAccount(params *UpdateCustomerServiceAccountParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateCustomerServiceAccountOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -74,6 +78,44 @@ func (a *Client) AddCustomerServiceAccount(params *AddCustomerServiceAccountPara
 }
 
 /*
+DelCustomerServiceAccount delete customer service account
+*/
+func (a *Client) DelCustomerServiceAccount(params *DelCustomerServiceAccountParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DelCustomerServiceAccountOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDelCustomerServiceAccountParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "delCustomerServiceAccount",
+		Method:             "POST",
+		PathPattern:        "/kf/account/del",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json", "application/xml"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DelCustomerServiceAccountReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DelCustomerServiceAccountOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DelCustomerServiceAccountDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
 GetToken get access token using corpid and secret
 */
 func (a *Client) GetToken(params *GetTokenParams, opts ...ClientOption) (*GetTokenOK, error) {
@@ -107,6 +149,44 @@ func (a *Client) GetToken(params *GetTokenParams, opts ...ClientOption) (*GetTok
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetTokenDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+UpdateCustomerServiceAccount update customer service account
+*/
+func (a *Client) UpdateCustomerServiceAccount(params *UpdateCustomerServiceAccountParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateCustomerServiceAccountOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateCustomerServiceAccountParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateCustomerServiceAccount",
+		Method:             "POST",
+		PathPattern:        "/kf/account/update",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json", "application/xml"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateCustomerServiceAccountReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateCustomerServiceAccountOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateCustomerServiceAccountDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
