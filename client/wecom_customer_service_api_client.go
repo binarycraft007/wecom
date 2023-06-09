@@ -6,10 +6,12 @@ package client
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"github.com/binarycraft007/wecom/client/operations"
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+
+	"github.com/binarycraft007/wecom/client/account"
+	"github.com/binarycraft007/wecom/client/token"
 )
 
 // Default wecom customer service API HTTP client.
@@ -54,7 +56,8 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *WecomCusto
 
 	cli := new(WecomCustomerServiceAPI)
 	cli.Transport = transport
-	cli.Operations = operations.New(transport, formats)
+	cli.Account = account.New(transport, formats)
+	cli.Token = token.New(transport, formats)
 	return cli
 }
 
@@ -99,7 +102,9 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 
 // WecomCustomerServiceAPI is a client for wecom customer service API
 type WecomCustomerServiceAPI struct {
-	Operations operations.ClientService
+	Account account.ClientService
+
+	Token token.ClientService
 
 	Transport runtime.ClientTransport
 }
@@ -107,5 +112,6 @@ type WecomCustomerServiceAPI struct {
 // SetTransport changes the transport on the client and all its subresources
 func (c *WecomCustomerServiceAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
-	c.Operations.SetTransport(transport)
+	c.Account.SetTransport(transport)
+	c.Token.SetTransport(transport)
 }

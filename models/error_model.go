@@ -19,24 +19,24 @@ import (
 // swagger:model ErrorModel
 type ErrorModel struct {
 
-	// code
+	// errcode
 	// Required: true
-	Code *int32 `json:"code"`
+	Errcode *int32 `json:"errcode"`
 
-	// message
+	// errmsg
 	// Required: true
-	Message *string `json:"message"`
+	Errmsg *string `json:"errmsg"`
 }
 
 // Validate validates this error model
 func (m *ErrorModel) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateCode(formats); err != nil {
+	if err := m.validateErrcode(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateMessage(formats); err != nil {
+	if err := m.validateErrmsg(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -46,18 +46,18 @@ func (m *ErrorModel) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *ErrorModel) validateCode(formats strfmt.Registry) error {
+func (m *ErrorModel) validateErrcode(formats strfmt.Registry) error {
 
-	if err := validate.Required("code", "body", m.Code); err != nil {
+	if err := validate.Required("errcode", "body", m.Errcode); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (m *ErrorModel) validateMessage(formats strfmt.Registry) error {
+func (m *ErrorModel) validateErrmsg(formats strfmt.Registry) error {
 
-	if err := validate.Required("message", "body", m.Message); err != nil {
+	if err := validate.Required("errmsg", "body", m.Errmsg); err != nil {
 		return err
 	}
 

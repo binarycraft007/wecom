@@ -35,8 +35,11 @@
   "paths": {
     "/gettoken": {
       "get": {
+        "tags": [
+          "token"
+        ],
         "description": "get access token using corpid and secret",
-        "operationId": "getToken",
+        "operationId": "get",
         "produces": [
           "application/json"
         ],
@@ -74,8 +77,11 @@
     },
     "/kf/account/add": {
       "post": {
+        "tags": [
+          "account"
+        ],
         "description": "add customer service account",
-        "operationId": "addCustomerServiceAccount",
+        "operationId": "add",
         "produces": [
           "application/json"
         ],
@@ -113,8 +119,11 @@
     },
     "/kf/account/del": {
       "post": {
+        "tags": [
+          "account"
+        ],
         "description": "delete customer service account",
-        "operationId": "delCustomerServiceAccount",
+        "operationId": "delete",
         "produces": [
           "application/json"
         ],
@@ -152,8 +161,11 @@
     },
     "/kf/account/update": {
       "post": {
+        "tags": [
+          "account"
+        ],
         "description": "update customer service account",
-        "operationId": "updateCustomerServiceAccount",
+        "operationId": "update",
         "produces": [
           "application/json"
         ],
@@ -191,8 +203,11 @@
     },
     "/kf/account/list": {
       "post": {
+        "tags": [
+          "account"
+        ],
         "description": "list customer service account",
-        "operationId": "listCustomerServiceAccount",
+        "operationId": "list",
         "produces": [
           "application/json"
         ],
@@ -404,15 +419,15 @@
     "ErrorModel": {
       "type": "object",
       "required": [
-        "code",
-        "message"
+        "errcode",
+        "errmsg"
       ],
       "properties": {
-        "code": {
+        "errcode": {
           "type": "integer",
           "format": "int32"
         },
-        "message": {
+        "errmsg": {
           "type": "string"
         }
       }
