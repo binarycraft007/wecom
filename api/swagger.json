@@ -242,6 +242,90 @@
           }
         ]
       }
+    },
+    "/kf/sync_msg": {
+      "post": {
+        "tags": [
+          "message"
+        ],
+        "description": "sync message",
+        "operationId": "sync",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SyncRequest",
+            "in": "body",
+            "description": "sync message request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SyncRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sync message response",
+            "schema": {
+              "$ref": "#/definitions/SyncReponse"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        },
+        "security": [
+          {
+            "access_token": []
+          }
+        ]
+      }
+    },
+    "/kf/send_msg": {
+      "post": {
+        "tags": [
+          "message"
+        ],
+        "description": "send message",
+        "operationId": "send",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SendRequest",
+            "in": "body",
+            "description": "send message request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "send message response",
+            "schema": {
+              "$ref": "#/definitions/SendReponse"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        },
+        "security": [
+          {
+            "access_token": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
@@ -412,6 +496,126 @@
           "type": "string"
         },
         "avatar": {
+          "type": "string"
+        }
+      }
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "msgid": {
+          "type": "string"
+        },
+        "open_kfid": {
+          "type": "string"
+        },
+        "external_userid": {
+          "type": "string"
+        },
+        "send_time": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "origin": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "msgtype": {
+          "type": "string"
+        }
+      }
+    },
+    "SyncRequest": {
+      "type": "object",
+      "properties": {
+        "cursor": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "uint32"
+        },
+        "voice_format": {
+          "type": "integer",
+          "format": "uint32"
+        },
+        "open_kfid": {
+          "type": "string"
+        }
+      }
+    },
+    "SyncReponse": {
+      "type": "object",
+      "required": [
+        "errcode",
+        "errmsg"
+      ],
+      "properties": {
+        "errcode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "next_cursor": {
+          "type": "string"
+        },
+        "has_more": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "errmsg": {
+          "type": "string"
+        },
+        "msg_list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Message"
+          }
+        }
+      }
+    },
+    "SendRequest": {
+      "type": "object",
+      "properties": {
+        "touser": {
+          "type": "string"
+        },
+        "msgid": {
+          "type": "string"
+        },
+        "msgtype": {
+          "type": "string"
+        },
+        "text": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "type": "string"
+            }
+          }
+        },
+        "open_kfid": {
+          "type": "string"
+        }
+      }
+    },
+    "SendReponse": {
+      "type": "object",
+      "required": [
+        "errcode",
+        "errmsg"
+      ],
+      "properties": {
+        "errcode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "msgid": {
+          "type": "string"
+        },
+        "errmsg": {
           "type": "string"
         }
       }

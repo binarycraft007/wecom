@@ -59,6 +59,15 @@ http://swagger.io/terms/
   
 
 
+###  message
+
+| Method  | URI     | Name   | Summary |
+|---------|---------|--------|---------|
+| POST | /cgi-bin/kf/send_msg | [send](#send) |  |
+| POST | /cgi-bin/kf/sync_msg | [sync](#sync) |  |
+  
+
+
 ###  token
 
 | Method  | URI     | Name   | Summary |
@@ -250,6 +259,100 @@ Status: OK
 unexpected error
 
 ###### <span id="list-default-schema"></span> Schema
+
+  
+
+[ErrorModel](#error-model)
+
+### <span id="send"></span> send (*send*)
+
+```
+POST /cgi-bin/kf/send_msg
+```
+
+send message
+
+#### Produces
+  * application/json
+
+#### Security Requirements
+  * access_token
+
+#### Parameters
+
+| Name | Source | Type | Go type | Separator | Required | Default | Description |
+|------|--------|------|---------|-----------| :------: |---------|-------------|
+| SendRequest | `body` | [SendRequest](#send-request) | `models.SendRequest` | | ✓ | | send message request |
+
+#### All responses
+| Code | Status | Description | Has headers | Schema |
+|------|--------|-------------|:-----------:|--------|
+| [200](#send-200) | OK | send message response |  | [schema](#send-200-schema) |
+| [default](#send-default) | | unexpected error |  | [schema](#send-default-schema) |
+
+#### Responses
+
+
+##### <span id="send-200"></span> 200 - send message response
+Status: OK
+
+###### <span id="send-200-schema"></span> Schema
+   
+  
+
+[SendReponse](#send-reponse)
+
+##### <span id="send-default"></span> Default Response
+unexpected error
+
+###### <span id="send-default-schema"></span> Schema
+
+  
+
+[ErrorModel](#error-model)
+
+### <span id="sync"></span> sync (*sync*)
+
+```
+POST /cgi-bin/kf/sync_msg
+```
+
+sync message
+
+#### Produces
+  * application/json
+
+#### Security Requirements
+  * access_token
+
+#### Parameters
+
+| Name | Source | Type | Go type | Separator | Required | Default | Description |
+|------|--------|------|---------|-----------| :------: |---------|-------------|
+| SyncRequest | `body` | [SyncRequest](#sync-request) | `models.SyncRequest` | | ✓ | | sync message request |
+
+#### All responses
+| Code | Status | Description | Has headers | Schema |
+|------|--------|-------------|:-----------:|--------|
+| [200](#sync-200) | OK | sync message response |  | [schema](#sync-200-schema) |
+| [default](#sync-default) | | unexpected error |  | [schema](#sync-default-schema) |
+
+#### Responses
+
+
+##### <span id="sync-200"></span> 200 - sync message response
+Status: OK
+
+###### <span id="sync-200-schema"></span> Schema
+   
+  
+
+[SyncReponse](#sync-reponse)
+
+##### <span id="sync-default"></span> Default Response
+unexpected error
+
+###### <span id="sync-default-schema"></span> Schema
 
   
 
@@ -449,6 +552,117 @@ unexpected error
 |------|------|---------|:--------:| ------- |-------------|---------|
 | limit | int32 (formatted integer)| `int32` |  | |  |  |
 | offset | int32 (formatted integer)| `int32` |  | |  |  |
+
+
+
+### <span id="message"></span> Message
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| external_userid | string| `string` |  | |  |  |
+| msgid | string| `string` |  | |  |  |
+| msgtype | string| `string` |  | |  |  |
+| open_kfid | string| `string` |  | |  |  |
+| origin | int32 (formatted integer)| `int32` |  | |  |  |
+| send_time | int64 (formatted integer)| `int64` |  | |  |  |
+
+
+
+### <span id="send-reponse"></span> SendReponse
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| errcode | int32 (formatted integer)| `int32` | ✓ | |  |  |
+| errmsg | string| `string` | ✓ | |  |  |
+| msgid | string| `string` |  | |  |  |
+
+
+
+### <span id="send-request"></span> SendRequest
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| msgid | string| `string` |  | |  |  |
+| msgtype | string| `string` |  | |  |  |
+| open_kfid | string| `string` |  | |  |  |
+| text | [SendRequestText](#send-request-text)| `SendRequestText` |  | |  |  |
+| touser | string| `string` |  | |  |  |
+
+
+
+#### Inlined models
+
+**<span id="send-request-text"></span> SendRequestText**
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| content | string| `string` |  | |  |  |
+
+
+
+### <span id="sync-reponse"></span> SyncReponse
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| errcode | int32 (formatted integer)| `int32` | ✓ | |  |  |
+| errmsg | string| `string` | ✓ | |  |  |
+| has_more | int32 (formatted integer)| `int32` |  | |  |  |
+| msg_list | [][Message](#message)| `[]*Message` |  | |  |  |
+| next_cursor | string| `string` |  | |  |  |
+
+
+
+### <span id="sync-request"></span> SyncRequest
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| cursor | string| `string` |  | |  |  |
+| limit | uint32 (formatted integer)| `uint32` |  | |  |  |
+| open_kfid | string| `string` |  | |  |  |
+| token | string| `string` |  | |  |  |
+| voice_format | uint32 (formatted integer)| `uint32` |  | |  |  |
 
 
 

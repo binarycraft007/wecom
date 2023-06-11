@@ -11,6 +11,7 @@ import (
 	"github.com/go-openapi/strfmt"
 
 	"github.com/binarycraft007/wecom/client/account"
+	"github.com/binarycraft007/wecom/client/message"
 	"github.com/binarycraft007/wecom/client/token"
 )
 
@@ -57,6 +58,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *WecomCusto
 	cli := new(WecomCustomerServiceAPI)
 	cli.Transport = transport
 	cli.Account = account.New(transport, formats)
+	cli.Message = message.New(transport, formats)
 	cli.Token = token.New(transport, formats)
 	return cli
 }
@@ -104,6 +106,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type WecomCustomerServiceAPI struct {
 	Account account.ClientService
 
+	Message message.ClientService
+
 	Token token.ClientService
 
 	Transport runtime.ClientTransport
@@ -113,5 +117,6 @@ type WecomCustomerServiceAPI struct {
 func (c *WecomCustomerServiceAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 	c.Account.SetTransport(transport)
+	c.Message.SetTransport(transport)
 	c.Token.SetTransport(transport)
 }
