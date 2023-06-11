@@ -8,6 +8,7 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -34,15 +35,71 @@ type Message struct {
 
 	// send time
 	SendTime int64 `json:"send_time,omitempty"`
+
+	// text
+	Text *MessageText `json:"text,omitempty"`
 }
 
 // Validate validates this message
 func (m *Message) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateText(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this message based on context it is used
+func (m *Message) validateText(formats strfmt.Registry) error {
+	if swag.IsZero(m.Text) { // not required
+		return nil
+	}
+
+	if m.Text != nil {
+		if err := m.Text.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("text")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("text")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this message based on the context it is used
 func (m *Message) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateText(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *Message) contextValidateText(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Text != nil {
+		if err := m.Text.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("text")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("text")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -57,6 +114,46 @@ func (m *Message) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (m *Message) UnmarshalBinary(b []byte) error {
 	var res Message
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*m = res
+	return nil
+}
+
+// MessageText message text
+//
+// swagger:model MessageText
+type MessageText struct {
+
+	// content
+	Content string `json:"content,omitempty"`
+
+	// menu id
+	MenuID string `json:"menu_id,omitempty"`
+}
+
+// Validate validates this message text
+func (m *MessageText) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this message text based on context it is used
+func (m *MessageText) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (m *MessageText) MarshalBinary() ([]byte, error) {
+	if m == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(m)
+}
+
+// UnmarshalBinary interface implementation
+func (m *MessageText) UnmarshalBinary(b []byte) error {
+	var res MessageText
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -12,6 +12,7 @@ import (
 
 	"github.com/binarycraft007/wecom/client/account"
 	"github.com/binarycraft007/wecom/client/message"
+	"github.com/binarycraft007/wecom/client/service_state"
 	"github.com/binarycraft007/wecom/client/token"
 )
 
@@ -59,6 +60,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *WecomCusto
 	cli.Transport = transport
 	cli.Account = account.New(transport, formats)
 	cli.Message = message.New(transport, formats)
+	cli.ServiceState = service_state.New(transport, formats)
 	cli.Token = token.New(transport, formats)
 	return cli
 }
@@ -108,6 +110,8 @@ type WecomCustomerServiceAPI struct {
 
 	Message message.ClientService
 
+	ServiceState service_state.ClientService
+
 	Token token.ClientService
 
 	Transport runtime.ClientTransport
@@ -118,5 +122,6 @@ func (c *WecomCustomerServiceAPI) SetTransport(transport runtime.ClientTransport
 	c.Transport = transport
 	c.Account.SetTransport(transport)
 	c.Message.SetTransport(transport)
+	c.ServiceState.SetTransport(transport)
 	c.Token.SetTransport(transport)
 }

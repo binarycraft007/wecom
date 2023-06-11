@@ -326,6 +326,90 @@
           }
         ]
       }
+    },
+    "/kf/service_state/get": {
+      "post": {
+        "tags": [
+          "service_state"
+        ],
+        "description": "get service state",
+        "operationId": "getState",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "getServiceStateRequest",
+            "in": "body",
+            "description": "get service state request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetServiceStateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get service state response",
+            "schema": {
+              "$ref": "#/definitions/GetServiceStateReponse"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        },
+        "security": [
+          {
+            "access_token": []
+          }
+        ]
+      }
+    },
+    "/kf/service_state/trans": {
+      "post": {
+        "tags": [
+          "service_state"
+        ],
+        "description": "transform service state",
+        "operationId": "transform",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "transformServiceStateRequest",
+            "in": "body",
+            "description": "transform service state request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransformServiceStateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "transform service state response",
+            "schema": {
+              "$ref": "#/definitions/TransformServiceStateReponse"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        },
+        "security": [
+          {
+            "access_token": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
@@ -522,6 +606,17 @@
         },
         "msgtype": {
           "type": "string"
+        },
+        "text": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "type": "string"
+            },
+            "menu_id": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -613,6 +708,82 @@
           "format": "int32"
         },
         "msgid": {
+          "type": "string"
+        },
+        "errmsg": {
+          "type": "string"
+        }
+      }
+    },
+    "GetServiceStateRequest": {
+      "type": "object",
+      "required": [
+        "open_kfid",
+        "external_userid"
+      ],
+      "properties": {
+        "open_kfid": {
+          "type": "string"
+        },
+        "external_userid": {
+          "type": "string"
+        }
+      }
+    },
+    "GetServiceStateReponse": {
+      "type": "object",
+      "properties": {
+        "errcode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "servicer_userid": {
+          "type": "string"
+        },
+        "service_state": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "errmsg": {
+          "type": "string"
+        }
+      }
+    },
+    "TransformServiceStateRequest": {
+      "type": "object",
+      "required": [
+        "open_kfid",
+        "external_userid",
+        "service_state"
+      ],
+      "properties": {
+        "open_kfid": {
+          "type": "string"
+        },
+        "external_userid": {
+          "type": "string"
+        },
+        "service_state": {
+          "type": "integer",
+	  "format": "int32"
+        },
+        "servicer_userid": {
+          "type": "string"
+        }
+      }
+    },
+    "TransformServiceStateReponse": {
+      "type": "object",
+      "required": [
+        "errcode",
+        "errmsg"
+      ],
+      "properties": {
+        "errcode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "msg_code": {
           "type": "string"
         },
         "errmsg": {

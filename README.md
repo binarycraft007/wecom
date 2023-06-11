@@ -68,6 +68,15 @@ http://swagger.io/terms/
   
 
 
+###  service_state
+
+| Method  | URI     | Name   | Summary |
+|---------|---------|--------|---------|
+| POST | /cgi-bin/kf/service_state/get | [get state](#get-state) |  |
+| POST | /cgi-bin/kf/service_state/trans | [transform](#transform) |  |
+  
+
+
 ###  token
 
 | Method  | URI     | Name   | Summary |
@@ -217,6 +226,53 @@ unexpected error
 
 [ErrorModel](#error-model)
 
+### <span id="get-state"></span> get state (*getState*)
+
+```
+POST /cgi-bin/kf/service_state/get
+```
+
+get service state
+
+#### Produces
+  * application/json
+
+#### Security Requirements
+  * access_token
+
+#### Parameters
+
+| Name | Source | Type | Go type | Separator | Required | Default | Description |
+|------|--------|------|---------|-----------| :------: |---------|-------------|
+| getServiceStateRequest | `body` | [GetServiceStateRequest](#get-service-state-request) | `models.GetServiceStateRequest` | | ✓ | | get service state request |
+
+#### All responses
+| Code | Status | Description | Has headers | Schema |
+|------|--------|-------------|:-----------:|--------|
+| [200](#get-state-200) | OK | get service state response |  | [schema](#get-state-200-schema) |
+| [default](#get-state-default) | | unexpected error |  | [schema](#get-state-default-schema) |
+
+#### Responses
+
+
+##### <span id="get-state-200"></span> 200 - get service state response
+Status: OK
+
+###### <span id="get-state-200-schema"></span> Schema
+   
+  
+
+[GetServiceStateReponse](#get-service-state-reponse)
+
+##### <span id="get-state-default"></span> Default Response
+unexpected error
+
+###### <span id="get-state-default-schema"></span> Schema
+
+  
+
+[ErrorModel](#error-model)
+
 ### <span id="list"></span> list (*list*)
 
 ```
@@ -353,6 +409,53 @@ Status: OK
 unexpected error
 
 ###### <span id="sync-default-schema"></span> Schema
+
+  
+
+[ErrorModel](#error-model)
+
+### <span id="transform"></span> transform (*transform*)
+
+```
+POST /cgi-bin/kf/service_state/trans
+```
+
+transform service state
+
+#### Produces
+  * application/json
+
+#### Security Requirements
+  * access_token
+
+#### Parameters
+
+| Name | Source | Type | Go type | Separator | Required | Default | Description |
+|------|--------|------|---------|-----------| :------: |---------|-------------|
+| transformServiceStateRequest | `body` | [TransformServiceStateRequest](#transform-service-state-request) | `models.TransformServiceStateRequest` | | ✓ | | transform service state request |
+
+#### All responses
+| Code | Status | Description | Has headers | Schema |
+|------|--------|-------------|:-----------:|--------|
+| [200](#transform-200) | OK | transform service state response |  | [schema](#transform-200-schema) |
+| [default](#transform-default) | | unexpected error |  | [schema](#transform-default-schema) |
+
+#### Responses
+
+
+##### <span id="transform-200"></span> 200 - transform service state response
+Status: OK
+
+###### <span id="transform-200-schema"></span> Schema
+   
+  
+
+[TransformServiceStateReponse](#transform-service-state-reponse)
+
+##### <span id="transform-default"></span> Default Response
+unexpected error
+
+###### <span id="transform-default-schema"></span> Schema
 
   
 
@@ -522,6 +625,40 @@ unexpected error
 
 
 
+### <span id="get-service-state-reponse"></span> GetServiceStateReponse
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| errcode | int32 (formatted integer)| `int32` |  | |  |  |
+| errmsg | string| `string` |  | |  |  |
+| service_state | int32 (formatted integer)| `int32` |  | |  |  |
+| servicer_userid | string| `string` |  | |  |  |
+
+
+
+### <span id="get-service-state-request"></span> GetServiceStateRequest
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| external_userid | string| `string` | ✓ | |  |  |
+| open_kfid | string| `string` | ✓ | |  |  |
+
+
+
 ### <span id="list-customer-service-account-reponse"></span> ListCustomerServiceAccountReponse
 
 
@@ -572,6 +709,25 @@ unexpected error
 | open_kfid | string| `string` |  | |  |  |
 | origin | int32 (formatted integer)| `int32` |  | |  |  |
 | send_time | int64 (formatted integer)| `int64` |  | |  |  |
+| text | [MessageText](#message-text)| `MessageText` |  | |  |  |
+
+
+
+#### Inlined models
+
+**<span id="message-text"></span> MessageText**
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| content | string| `string` |  | |  |  |
+| menu_id | string| `string` |  | |  |  |
 
 
 
@@ -663,6 +819,41 @@ unexpected error
 | open_kfid | string| `string` |  | |  |  |
 | token | string| `string` |  | |  |  |
 | voice_format | uint32 (formatted integer)| `uint32` |  | |  |  |
+
+
+
+### <span id="transform-service-state-reponse"></span> TransformServiceStateReponse
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| errcode | int32 (formatted integer)| `int32` | ✓ | |  |  |
+| errmsg | string| `string` | ✓ | |  |  |
+| msg_code | string| `string` |  | |  |  |
+
+
+
+### <span id="transform-service-state-request"></span> TransformServiceStateRequest
+
+
+  
+
+
+
+**Properties**
+
+| Name | Type | Go type | Required | Default | Description | Example |
+|------|------|---------|:--------:| ------- |-------------|---------|
+| external_userid | string| `string` | ✓ | |  |  |
+| open_kfid | string| `string` | ✓ | |  |  |
+| service_state | int32 (formatted integer)| `int32` | ✓ | |  |  |
+| servicer_userid | string| `string` |  | |  |  |
 
 
 
